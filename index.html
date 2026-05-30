@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Hikari | Japanese Soul & Light</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fefaf5;
+            color: #1f2a2e;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --gold: #c17b4c;
+            --gold-light: #e3b28c;
+            --sand: #f3ede8;
+            --deep: #2a3b3c;
+            --border-light: rgba(193, 123, 76, 0.2);
+            --shadow-soft: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+            --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* language switcher */
+        .lang-switch {
+            position: fixed;
+            top: 24px;
+            right: 28px;
+            z-index: 1100;
+            background: rgba(255, 250, 240, 0.9);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 6px 16px;
+            border: 1px solid var(--border-light);
+            display: flex;
+            gap: 8px;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            color: #5b4b3a;
+            transition: 0.2s;
+        }
+
+        .lang-btn.active {
+            background: var(--gold);
+            color: white;
+            box-shadow: 0 2px 6px rgba(193, 123, 76, 0.3);
+        }
+
+        /* typography */
+        h1 {
+            font-size: 5rem;
+            font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 2rem;
+            color: #2e3b3c;
+            border-left: 4px solid var(--gold);
+            padding-left: 24px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
+        }
+
+        .gold {
+            color: var(--gold);
+        }
+
+        /* hero section with abstract minimal art */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, #fff7ef 0%, #faead7 100%);
+            padding: 120px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(193,123,76,0.08) 0%, rgba(193,123,76,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -15%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(227,178,140,0.1) 0%, rgba(227,178,140,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            background: rgba(193,123,76,0.12);
+            padding: 6px 18px;
+            border-radius: 60px;
+            display: inline-block;
+            font-weight: 500;
+            color: #9b5e36;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #4d5c5e;
+            margin: 1.5rem 0 2rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s;
+            background: var(--gold);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-outline:hover {
+            background: var(--gold);
+            color: white;
+        }
+
+        /* abstract card design — clean, no emoji, geometric accents */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .dish-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow-card);
+            border: 1px solid #f0e2d8;
+            position: relative;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 32px -12px rgba(0, 0, 0, 0.12);
+            border-color: var(--gold-light);
+        }
+
+        .dish-visual {
+            height: 180px;
+            background: linear-gradient(145deg, #fbf4ed 0%, #f5e8de 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #f0e2d8;
+        }
+
+        /* abstract japanese-inspired motifs */
+        .dish-visual::after {
+            content: "";
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(193,123,76,0.15) 0%, rgba(193,123,76,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .visual-symbol {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #c28a5c;
+            letter-spacing: 4px;
+            opacity: 0.7;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .dish-content {
+            padding: 1.5rem 1.8rem 1.8rem;
+        }
+
+        .dish-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--gold);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .desc {
+            color: #5f6c6e;
+            margin: 0.8rem 0 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-left: 2px solid var(--gold-light);
+            padding-left: 12px;
+        }
+
+        .order-btn {
+            background: transparent;
+            border: 1.5px solid var(--gold);
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: var(--gold);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            font-size: 0.85rem;
+            background: white;
+        }
+
+        .order-btn:hover {
+            background: var(--gold);
+            color: white;
+            transform: scale(0.98);
+        }
+
+        /* values / story with modern tiles */
+        .two-col {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .two-col > div {
+            flex: 1 1 45%;
+        }
+
+        .story-card {
+            background: #fffaf5;
+            border-radius: 36px;
+            padding: 2rem;
+            border: 1px solid #f3e1d2;
+            transition: var(--transition);
+        }
+
+        .values-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .value-chip {
+            background: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: 1px solid #f0e2d8;
+            color: #5b4b3a;
+            transition: var(--transition);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .value-chip:hover {
+            border-color: var(--gold-light);
+            background: #fef7f0;
+        }
+
+        .team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .team-card {
+            text-align: center;
+            width: 150px;
+            background: white;
+            padding: 1.2rem 0.8rem;
+            border-radius: 32px;
+            transition: var(--transition);
+            border: 1px solid #f0e2d8;
+        }
+
+        .team-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--gold-light);
+            box-shadow: var(--shadow-card);
+        }
+
+        .team-icon {
+            font-size: 2.2rem;
+            font-weight: 400;
+            background: #fef5ed;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            margin: 0 auto 12px;
+            color: #b47b52;
+        }
+
+        .award-badge {
+            background: white;
+            padding: 8px 22px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin: 0 8px 12px 0;
+            border: 1px solid #f0e2d8;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        footer {
+            background: #f3ede8;
+            text-align: center;
+            padding: 48px 0;
+            margin-top: 40px;
+            color: #6c5b4e;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            h1 { font-size: 3rem; }
+            h2 { font-size: 2rem; }
+            .hero { padding: 80px 0; }
+            .dish-visual { height: 140px; }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        section {
+            padding: 70px 0;
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2a3b3c;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+            pointer-events: none;
+            font-weight: 500;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #6b5847;
+            line-height: 1.6;
+        }
+
+        .decor-line {
+            width: 50px;
+            height: 2px;
+            background: var(--gold-light);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="lang-switch">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="ru">RU</button>
+</div>
+
+<section class="hero">
+    <div class="container">
+        <div class="hero-content fade-up">
+            <span class="hero-badge">✦ 光 HIKARI ✦</span>
+            <h1 style="margin-top: 1rem;"><span class="gold">Light</span> in every bowl</h1>
+            <p class="subhead" data-en="To invite you into the world of Hikari. Taste our food. Feel the light. And if you fall in love — join us." data-ru="Пригласить вас в мир Hikari. Попробовать нашу еду. Почувствовать свет. А если полюбите — присоединиться.">
+                To invite you into the world of Hikari. Taste our food. Feel the light. And if you fall in love — join us.
+            </p>
+            <a href="#menu" class="btn" data-en="Explore menu →" data-ru="Меню →">Explore menu →</a>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container fade-up">
+        <h2 data-en="The meaning of Hikari" data-ru="Значение Hikari">The meaning of Hikari</h2>
+        <div class="two-col">
+            <div>
+                <p data-en="Hikari (光) means «light» in Japanese. We chose this name because light is the heart of everything we do. Every guest leaves brighter than when they came in. That is our promise. That is Hikari." data-ru="Hikari (光) означает «свет» на японском. Свет — сердце всего, что мы делаем. Каждый гость уходит светлее, чем пришёл. Это наше обещание. Это Hikari.">
+                    Hikari (光) means «light» in Japanese. We chose this name because light is the heart of everything we do. Every guest leaves brighter than when they came in. That is our promise. That is Hikari.
+                </p>
+                <div class="decor-line"></div>
+                <p style="margin-top: 1rem;" data-en="A Dream That Became Light — during a trip to Osaka, an old woman told us: 'Light is not just in the lamp. It is in the soup, the rice, every detail'. We brought this light to our city." data-ru="Мечта, ставшая светом — родилась в поездке в Осаку. Пожилая женщина сказала: «Свет не только в лампе. Он в супе, рисе, каждой детали». Мы принесли этот свет в наш город.">
+                    A Dream That Became Light — during a trip to Osaka, an old woman told us: 'Light is not just in the lamp. It is in the soup, the rice, every detail'. We brought this light to our city.
+                </p>
+            </div>
+            <div class="story-card">
+                <div style="font-size: 2.5rem; font-weight: 300; color: #c28a5c; letter-spacing: 2px;">光の心</div>
+                <div class="decor-line" style="margin: 16px 0;"></div>
+                <div class="quote-text" data-en="“The brightest meals are those shared with intention.”" data-ru="«Самые светлые блюда — те, что разделены с душой».">
+                    “The brightest meals are those shared with intention.”
+                </div>
+                <div style="margin-top: 20px; font-size: 0.8rem; color: #9b7a64;">— Osaka, 2019</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container fade-up">
+        <h2 data-en="What we believe in" data-ru="Наши ценности">What we believe in</h2>
+        <div class="values-row">
+            <span class="value-chip">🌾 Freshness</span>
+            <span class="value-chip">🔥 Warmth</span>
+            <span class="value-chip">🎌 Respect</span>
+            <span class="value-chip">🤲 Honesty</span>
+            <span class="value-chip">✨ Light</span>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN MENU - 6 ELEGANT DISHES WITHOUT EMOJIS -->
+<section id="menu">
+    <div class="container fade-up">
+        <h2 data-en="Our menu · taste of light" data-ru="Наше меню · вкус света">Our menu · taste of light</h2>
+        <div class="menu-grid" id="dishes-container">
+            <!-- dynamic js -->
+        </div>
+        <p style="text-align: center; margin-top: 2rem; font-style: normal; color: #b28b6b; letter-spacing: 0.5px; font-size: 0.9rem;">✦ <span data-en="We put a piece of warm light into every plate" data-ru="Мы вкладываем частицу света в каждую тарелку">We put a piece of warm light into every plate</span> ✦</p>
+    </div>
+</section>
+
+<!-- TEAM SECTION - refined cards -->
+<section>
+    <div class="container fade-up">
+        <h2 data-en="Our family · heart of Hikari" data-ru="Наша семья · сердце Hikari">Our family · heart of Hikari</h2>
+        <div class="team-grid" id="teamGrid">
+            <!-- team injected clean -->
+        </div>
+    </div>
+</section>
+
+<!-- Awards & Join -->
+<section>
+    <div class="container fade-up">
+        <h2 data-en="Recognition" data-ru="Награды">Recognition</h2>
+        <div>
+            <span class="award-badge">⭐️⭐️⭐️ Michelin 2026</span>
+            <span class="award-badge" data-en="Best Ramen 2024" data-ru="Лучший рамен 2024">Best Ramen 2024</span>
+            <span class="award-badge" data-en="Golden Spoon Service" data-ru="Золотая ложка">Golden Spoon Service</span>
+            <span class="award-badge" data-en="Coziest Restaurant 2025" data-ru="Уютное кафе 2025">Coziest Restaurant 2025</span>
+            <span class="award-badge">⭐ 4.8 · 94% recommend</span>
+        </div>
+    </div>
+</section>
+
+<section id="join">
+    <div class="container fade-up">
+        <h2 data-en="Become part of Hikari" data-ru="Стань частью Hikari">Become part of Hikari</h2>
+        <div class="two-col">
+            <div>
+                <p data-en="One open position for a waiter. Love Japanese cuisine? Bring warmth and light. No experience? We'll teach you. Just bring a smile." data-ru="Открыта позиция официанта. Любишь японскую кухню? Приноси тепло и свет. Нет опыта? Научим. Просто улыбку.">
+                    One open position for a waiter. Love Japanese cuisine? Bring warmth and light. No experience? We'll teach you. Just bring a smile.
+                </p>
+                <a href="#" class="btn" style="margin-top: 24px; display: inline-block;" data-en="✧ Send your light ✧" data-ru="✧ Отправь свет ✧">✧ Send your light ✧</a>
+            </div>
+            <div class="story-card" style="text-align: center;">
+                <div style="font-size: 1.8rem; letter-spacing: 2px;">侍心</div>
+                <div class="decor-line" style="margin: 16px auto;"></div>
+                <span data-en="join our family" data-ru="присоединяйся" style="font-weight: 500;">join our family</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Hikari — <span data-en="Light in every bowl · Japanese warmth" data-ru="Свет в каждой тарелке · Японское тепло">Light in every bowl · Japanese warmth</span></p>
+</footer>
+<div id="toast" class="toast-msg" style="display: none;"></div>
+
+<script>
+    // DISHES DATA (without emojis, elegant names)
+    const dishesData = [
+        { id:1, name_en:"Tonkotsu Ramen", name_ru:"Тонкоцу Рамен", price:"$14", desc_en:"20h pork broth, chashu, soft egg, nori, green onions", desc_ru:"20-часовой бульон, чашу, мягкое яйцо, нори, зеленый лук", symbol:"🍜" },
+        { id:2, name_en:"Gyoza", name_ru:"Гёдза", price:"$8", desc_en:"Six pieces · Pan-fried, juicy pork & cabbage, garlic ginger", desc_ru:"6 шт · Обжаренные, сочная свинина, капуста, чеснок, имбирь", symbol:"🥟" },
+        { id:3, name_en:"Onigiri Set", name_ru:"Онигири сет", price:"$9", desc_en:"Three rice balls · Salmon, umeboshi & seaweed", desc_ru:"Три рисовых шарика · Лосось, умебоши, нори", symbol:"🍙" },
+        { id:4, name_en:"Katsu Curry", name_ru:"Кацу Карри", price:"$16", desc_en:"Crispy chicken cutlet, Japanese curry, steamed rice", desc_ru:"Хрустящий цыпленок, японское карри, рис", symbol:"🍛" },
+        { id:5, name_en:"Spicy Tantan Ramen", name_ru:"Тантан Рамен", price:"$15", desc_en:"Sesame & chili broth, minced pork, bok choy, chili oil", desc_ru:"Кунжутно-острый бульон, свинина, бок-чой, масло чили", symbol:"🔥" },
+        { id:6, name_en:"Matcha Cheesecake", name_ru:"Чизкейк Матча", price:"$7", desc_en:"Creamy matcha, light sweetness, berry sauce", desc_ru:"Нежный матча, легкая сладость, ягодный соус", symbol:"🍵" }
+    ];
+
+    const teamMembers = [
+        { name:"Rin", role_en:"Waiter", role_ru:"Официантка", icon:"R" },
+        { name:"Miko", role_en:"Head Waiter", role_ru:"Старший официант", icon:"M" },
+        { name:"Hiroshi", role_en:"Head Chef", role_ru:"Шеф-повар", icon:"H" },
+        { name:"Yuki", role_en:"Sous Chef", role_ru:"Су-шеф", icon:"Y" },
+        { name:"Emi", role_en:"Pastry Chef", role_ru:"Кондитер", icon:"E" },
+        { name:"Kenji", role_en:"Sushi Master", role_ru:"Мастер суши", icon:"K" }
+    ];
+
+    let currentLang = 'en';
+
+    function renderMenu() {
+        const container = document.getElementById('dishes-container');
+        if (!container) return;
+        container.innerHTML = '';
+        dishesData.forEach(dish => {
+            const name = currentLang === 'en' ? dish.name_en : dish.name_ru;
+            const desc = currentLang === 'en' ? dish.desc_en : dish.desc_ru;
+            const orderText = currentLang === 'en' ? 'Order now' : 'Заказать';
+            const visualSymbol = dish.symbol;
+            const card = document.createElement('div');
+            card.className = 'dish-card';
+            card.innerHTML = `
+                <div class="dish-visual">
+                    <div class="visual-symbol">${visualSymbol}</div>
+                </div>
+                <div class="dish-content">
+                    <div class="dish-title">
+                        <span>${name}</span>
+                        <span class="price">${dish.price}</span>
+                    </div>
+                    <div class="desc">${desc}</div>
+                    <button class="order-btn" data-dish="${name}">🛎️ ${orderText}</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        attachOrderEvents();
+    }
+
+    function attachOrderEvents() {
+        document.querySelectorAll('.order-btn').forEach(btn => {
+            btn.removeEventListener('click', orderHandler);
+            btn.addEventListener('click', orderHandler);
+        });
+    }
+
+    function orderHandler(e) {
+        const btn = e.currentTarget;
+        const dishName = btn.getAttribute('data-dish') || (currentLang === 'en' ? 'Dish' : 'Блюдо');
+        const msg = currentLang === 'en' ? `✨ ${dishName} added to your order!` : `✨ ${dishName} добавлено в заказ!`;
+        showToast(msg);
+    }
+
+    function renderTeam() {
+        const teamContainer = document.getElementById('teamGrid');
+        if (!teamContainer) return;
+        teamContainer.innerHTML = '';
+        teamMembers.forEach(member => {
+            const role = currentLang === 'en' ? member.role_en : member.role_ru;
+            const card = document.createElement('div');
+            card.className = 'team-card';
+            card.innerHTML = `
+                <div class="team-icon">${member.icon}</div>
+                <h4 style="font-size:1.2rem; font-weight:600;">${member.name}</h4>
+                <p style="color:#7e6a5a; font-size:0.85rem;">${role}</p>
+            `;
+            teamContainer.appendChild(card);
+        });
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 2000);
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        // update all data-en / data-ru elements
+        document.querySelectorAll('[data-en][data-ru]').forEach(el => {
+            const text = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-ru');
+            if (text) el.innerText = text;
+        });
+        // update awards which have both languages but separate elements: we handle via data
+        const awardElements = document.querySelectorAll('.award-badge');
+        awardElements.forEach(el => {
+            const enText = el.getAttribute('data-en');
+            const ruText = el.getAttribute('data-ru');
+            if (enText && ruText) {
+                el.innerText = lang === 'en' ? enText : ruText;
+            }
+        });
+        // for team
+        renderTeam();
+        // update lang buttons active style
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            if(btn.getAttribute('data-lang') === lang) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        // re-render menu
+        renderMenu();
+    }
+
+    // set data attributes for awards
+    const awardSpans = document.querySelectorAll('.award-badge');
+    if(awardSpans.length >= 2) {
+        if(awardSpans[1]) { awardSpans[1].setAttribute('data-en', 'Best Ramen 2024'); awardSpans[1].setAttribute('data-ru', 'Лучший рамен 2024'); }
+        if(awardSpans[2]) { awardSpans[2].setAttribute('data-en', 'Golden Spoon Service'); awardSpans[2].setAttribute('data-ru', 'Золотая ложка'); }
+        if(awardSpans[3]) { awardSpans[3].setAttribute('data-en', 'Coziest Restaurant 2025'); awardSpans[3].setAttribute('data-ru', 'Уютное кафе 2025'); }
+    }
+
+    // language switcher initialization
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            setLanguage(lang);
+        });
+    });
+
+    // initial setup
+    setLanguage('en');
+
+    // fade-up observer
+    const faders = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('appear');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {threshold: 0.1, rootMargin: "0px 0px -20px 0px"});
+    faders.forEach(el => observer.observe(el));
+    setTimeout(() => {
+        faders.forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('appear'); });
+    }, 100);
+</script>
+</body>
+</html>
